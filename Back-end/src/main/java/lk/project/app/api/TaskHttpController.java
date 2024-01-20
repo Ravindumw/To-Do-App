@@ -41,6 +41,19 @@ public class TaskHttpController {
     @ResponseStatus(HttpStatus.CREATED)
     @PostMapping(produces = "application/json", consumes = "application/json")
     public TaskTO createTask(@RequestBody TaskTO task){
+        // validation
+        if (task.getId() != null){
+            // bad request
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "ID should be empty");
+        } else if (task.getDescription() == null || task.getDescription().isBlank()) {
+            // bad request
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Description can't be empty");
+        } else if (task.getStatus() != null) {
+            // bad request
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Status should be empty");
+        }
+        // spring validation
+
         System.out.println("createTask");
         return null;
     }

@@ -4,10 +4,13 @@ import com.zaxxer.hikari.HikariConfig;
 import com.zaxxer.hikari.HikariDataSource;
 import lk.project.app.to.TaskTO;
 import org.springframework.http.HttpStatus;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
 import javax.annotation.PreDestroy;
+import javax.validation.Valid;
+import javax.validation.groups.Default;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -40,20 +43,7 @@ public class TaskHttpController {
       */
     @ResponseStatus(HttpStatus.CREATED)
     @PostMapping(produces = "application/json", consumes = "application/json")
-    public TaskTO createTask(@RequestBody TaskTO task){
-        // validation
-        if (task.getId() != null){
-            // bad request
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "ID should be empty");
-        } else if (task.getDescription() == null || task.getDescription().isBlank()) {
-            // bad request
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Description can't be empty");
-        } else if (task.getStatus() != null) {
-            // bad request
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Status should be empty");
-        }
-        // spring validation
-
+    public TaskTO createTask(@RequestBody @Validated(TaskTO.Create.class) TaskTO task){
         System.out.println("createTask");
         return null;
     }
@@ -66,8 +56,8 @@ public class TaskHttpController {
 
     @ResponseStatus(HttpStatus.NO_CONTENT)
     @PatchMapping(value = "/{id}" , consumes = "application/json")
-    public void updateTask(@RequestBody Map<String,String> params,
-                           @PathVariable("id") String taskId){
+    public void updateTask(@PathVariable("id") String taskId,
+                           @RequestBody @Validated(TaskTO.Update.class) TaskTO task){
         System.out.println("updateTask");
     }
 

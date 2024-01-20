@@ -62,16 +62,30 @@ public class TaskHttpController {
     }
 
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    @DeleteMapping("/{id}")
-    public void deleteTask(@PathVariable String id){
-        System.out.println("DeleteMapping");
+    @PatchMapping(value = "/{id}" , consumes = "application/json")
+    public void updateTask(@PathVariable("id") int taskId,
+                           @RequestBody @Validated(TaskTO.Update.class) TaskTO task){
+        try (Connection connection = pool.getConnection()){
+            PreparedStatement stmExist = connection.prepareStatement("SELECT * FROM task WHERE id = ?");
+            stmExist.setInt(1,taskId);
+            if(!stmExist.executeQuery().next()){
+                throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Task not found");
+            }
+
+            PreparedStatement stm = connection.prepareStatement("UPDATE task SET  description = ?, status = ? WHERE id = ?");
+            stm.setString(1, task.getDescription());
+            stm.setBoolean(2,task.getStatus());
+            stm.setInt(3,taskId);
+            stm.executeUpdate();
+        }catch (SQLException e){
+            throw new RuntimeException(e);
+        }
     }
 
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    @PatchMapping(value = "/{id}" , consumes = "application/json")
-    public void updateTask(@PathVariable("id") String taskId,
-                           @RequestBody @Validated(TaskTO.Update.class) TaskTO task){
-        System.out.println("updateTask");
+    @DeleteMapping("/{id}")
+    public void deleteTask(@PathVariable String id){
+        System.out.println("DeleteMapping");
     }
 
     @GetMapping(produces = "application/json")

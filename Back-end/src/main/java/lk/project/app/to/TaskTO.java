@@ -4,9 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Null;
+import javax.validation.constraints.*;
 import javax.validation.groups.Default;
 import java.io.Serializable;
 
@@ -21,6 +19,9 @@ public class TaskTO implements Serializable {
     @Null(message = "Status should be empty", groups = Create.class) // create
     @NotNull(message = "Status should be empty", groups = Update.class) // update
     private Boolean status;
+    @NotEmpty(message = "Email can't be empty")
+    @Email
+    private String email;
 
     public interface Update extends Default {}
     public interface Create extends Default {}

@@ -18,7 +18,7 @@ import java.util.List;
 import java.util.Map;
 
 @RestController
-@RequestMapping("/tasks")
+@RequestMapping("/api/v1/tasks")
 @CrossOrigin
 public class TaskHttpController {
 
@@ -49,8 +49,9 @@ public class TaskHttpController {
     public TaskTO createTask(@RequestBody @Validated TaskTO task){
         try (Connection connection = pool.getConnection()){
             PreparedStatement stm = connection.
-                    prepareStatement("INSERT INTO task (description, status) VALUES (?, FALSE)", Statement.RETURN_GENERATED_KEYS);
+                    prepareStatement("INSERT INTO task (description, status,email) VALUES (?, FALSE, ?)", Statement.RETURN_GENERATED_KEYS);
             stm.setString(1,task.getDescription());
+            stm.setString(2,task.getEmail());
             stm.executeUpdate();
             ResultSet generatedKeys = stm.getGeneratedKeys();
             generatedKeys.next();
@@ -112,7 +113,8 @@ public class TaskHttpController {
                 int id = rst.getInt("id");
                 String description = rst.getString("description");
                 boolean status = rst.getBoolean("status");
-                taskList.add(new TaskTO(id,description,status));
+                String email = rst.getString("email");
+                taskList.add(new TaskTO(id,description,status,email));
             }
             return taskList;
         }catch (SQLException e){

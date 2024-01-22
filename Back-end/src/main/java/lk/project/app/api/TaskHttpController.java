@@ -103,17 +103,17 @@ public class TaskHttpController {
     }
 
     /* @ResponseStatus(HttpStatus.OK) */
-    @GetMapping(produces = "application/json")
-    public List<TaskTO> getAllTasks(){
+    @GetMapping(produces = "application/json" , params = {"email"})
+    public List<TaskTO> getAllTasks(String email){
         try (Connection connection = pool.getConnection()){
-            Statement stm = connection.createStatement();
-            ResultSet rst = stm.executeQuery("SELECT * FROM task ORDER BY id");
+            PreparedStatement stm = connection.prepareStatement("SELECT * FROM task WHERE email =? ORDER BY id");
+            stm.setString(1, email);
+            ResultSet rst = stm.executeQuery();
             List<TaskTO> taskList = new LinkedList<>();
             while (rst.next()){
                 int id = rst.getInt("id");
                 String description = rst.getString("description");
                 boolean status = rst.getBoolean("status");
-                String email = rst.getString("email");
                 taskList.add(new TaskTO(id,description,status,email));
             }
             return taskList;

@@ -16,6 +16,9 @@ devDependencies:
   parcel:
     specifier: ^2.11.0
     version: 2.11.0
+  process:
+    specifier: ^0.11.10
+    version: 0.11.10
 
 packages:
 
@@ -1804,6 +1807,11 @@ packages:
     dependencies:
       posthtml-parser: 0.11.0
       posthtml-render: 3.0.0
+    dev: true
+
+  /process@0.11.10:
+    resolution: {integrity: sha512-cdGef/drWFoydD1JsMzuFf8100nZl+GT+yacc2bEced5f9Rjk4z+WtFUTBu9PhOi9j/jfmBPu0mMEY4wIdAF8A==}
+    engines: {node: '>= 0.6.0'}
     dev: true
 
   /react-error-overlay@6.0.9:

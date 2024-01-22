@@ -1,0 +1,16 @@
+#task-container li {
+    cursor: pointer;
+
+    & label {
+        cursor: pointer;
+    }
+
+    &:hover {
+        background-color: rgb(231, 231, 231);
+        border-radius: 5px;
+    }
+
+    & .delete:hover {
+        color: red;
+    }
+}

@@ -1,6 +1,7 @@
 const btnAddElm = document.querySelector('#btn-add');
 const txtElm = document.querySelector('#txt');
 const taskContainerElm = document.querySelector('#task-container');
+const {API_URL} = process.env;
 
 loadAllTasks();
 
@@ -8,7 +9,7 @@ function loadAllTasks(){
     // Todo : load all tasks from the back-end
     // if success
 
-    fetch('http://localhost:8080/tasks').then(res => {
+    fetch(`${API_URL}/tasks`).then(res => {
         if (res.ok){
             res.json().then(taskList => taskList.forEach(task => createTask(task))) ;
         }else{
@@ -24,11 +25,14 @@ function createTask(task){
     const newLiElm = document.createElement('li');
     taskContainerElm.append(newLiElm);
     newLiElm.id = "task-" + task.id;
+    newLiElm.className = 'd-flex justify-content-between p-1 px-3 align-items-center';
     
     newLiElm.innerHTML = `
-        <input id="chk-task-${task.id}" type="checkbox" ${task.status ? "checked": ""}>
-        <label for="chk-task-${task.id}">${task.description}</label>
-        <i class="delete bi bi-trash"></i>    
+    <div class="flex-grow-1 d-flex gap-2 align-items-center">
+    <input class="form-check-input m-0" id="chk-task-${task.id}" type="checkbox" ${task.status ? "checked": ""}>
+    <label class="flex-grow-1" for="chk-task-${task.id}">${task.description}</label>
+    </div>
+    <i class="delete bi bi-trash fs-4"></i> 
     `;
 
 }
@@ -40,18 +44,18 @@ taskContainerElm.addEventListener('click',(e)=>{
         // todo : delete the task in back-end
         // if success
 
-        const taskId = e.target.closest('li').id.subString(5);
+        const taskId = e.target.closest('li').id.substring(5);
 
-        fetch(`http://localhost:8080/tasks/${taskId}`, {method : 'DELETE'})
-        .then(res=>{
-            if(res.ok){
+        fetch(`${API_URL}/tasks/${taskId}`, {method: 'DELETE'})
+        .then(res => {
+            if (res.ok){
                 e.target.closest("li").remove();
             }else{
                 alert("Failed to delete the task");
             }
         }).catch(err => {
             alert("Something went wrong, try again later");
-        });
+        }); 
 
     }else if(e.target?.tagName === "INPUT" ) {
         // Todo : update the task status in the back-end
@@ -63,7 +67,7 @@ taskContainerElm.addEventListener('click',(e)=>{
             status: e.target.checked
         };
 
-        fetch(`http://localhost:8080/tasks/${taskId}`, {
+        fetch(`${API_URL}/tasks/${taskId}`, {
             method: 'PATCH',
             headers: {
                 "Content-Type": "application/json"
@@ -95,7 +99,7 @@ btnAddElm.addEventListener('click', ()=>{
     // todo : save the task in the back-end 
     // if success
 
-    fetch('http://localhost:8080/tasks', {
+    fetch(`${API_URL}/tasks`, {
         method: 'POST',
         headers: {
             "Content-Type": "application/json"

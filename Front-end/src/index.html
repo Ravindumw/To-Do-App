@@ -3,21 +3,35 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>To Do App</title>
+    <title>To-do App</title>
     <link rel="stylesheet" href="/node_modules/bootstrap/dist/css/bootstrap.min.css">
-    <link rel="stylesheet" href="/node_modules//bootstrap-icons/font//bootstrap-icons.min.css">
+    <link rel="stylesheet" href="/node_modules/bootstrap-icons/font/bootstrap-icons.min.css">
     <script type="module" src="js/main.js"></script>
     <link rel="stylesheet" href="css/main.css">
 </head>
 <body>
     <header class="p-2">
-        <h1 class="text-center">To-do App</h1>
-        <form class="d-flex gap-1" action="javascript:void(0)">
+        <div class="d-flex justify-content-between align-items-center px-1">
+            <h1 class="text-center m-0">To-do App</h1>
+            <button id="btn-sign-out" class="btn btn-light">Sign Out</button>
+        </div>
+        <form class="d-flex gap-1 mt-3" action="javascript:void(0)">
             <input class="form-control" id="txt" type="text" placeholder="Eg. Design Wireframes">
             <button class="btn btn-primary" id="btn-add">ADD</button>
         </form>
     </header>
     <ul class="list-unstyled p-2" id="task-container">
     </ul>
+    <div id="login-overlay" class="vw-100 vh-100 position-fixed d-flex justify-content-center align-items-center">
+        <div id="login-wrapper" class="text-center">
+            <h3>Welcome to To-do App Sign In</h3>
+            <button id="btn-sign-in" class="btn btn-primary mt-2">Sign in with Google</button>
+        </div>
+    </div>
+    <div id="loader" class="vw-100 vh-100 position-fixed d-flex justify-content-center align-items-center">
+        <div id="loader-wrapper">
+            <div class="lds-roller"><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div>
+        </div>
+    </div>
 </body>
 </html>

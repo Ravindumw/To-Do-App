@@ -1,10 +1,9 @@
 {
   "name": "front-end",
   "version": "1.0.0",
-  "description": "",
   "source": "src/index.html",
   "scripts": {
-    "start": "parcel",
+    "start": "parcel --no-cache",
     "build": "rm -rf dist && parcel build"
   },
   "devDependencies": {
@@ -13,6 +12,7 @@
   },
   "dependencies": {
     "bootstrap": "^5.3.2",
-    "bootstrap-icons": "^1.11.3"
+    "bootstrap-icons": "^1.11.3",
+    "firebase": "^10.7.2"
   }
 }

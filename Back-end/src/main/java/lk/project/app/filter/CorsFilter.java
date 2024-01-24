@@ -12,7 +12,7 @@ public class CorsFilter extends HttpFilter {
 
     @Override
     protected void doFilter(HttpServletRequest req, HttpServletResponse res, FilterChain chain) throws IOException, ServletException {
-        List<String> origins = List.of("http://localhost:1234", "http://127.0.0.1:5500");
+        List<String> origins = List.of("http://localhost:1234","http://localhost:43953", "http://127.0.0.1:5500");
         String origin = req.getHeader("Origin");
 
         if (origin != null && origins.stream().anyMatch(o -> o.equalsIgnoreCase(origin))){

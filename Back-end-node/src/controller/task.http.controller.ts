@@ -2,6 +2,7 @@ import {Router} from "express";
 import {Request, Response} from "express";
 import mysql, {ResultSetHeader, RowDataPacket} from "mysql2/promise";
 import {TaskTO} from "../to/TaskTO.js";
+import 'dotenv/config';
 
 const controller = Router();
 
@@ -12,12 +13,12 @@ controller.delete('/:id',deleteTask);
 export {controller as TaskHttpController};
 
 const pool = mysql.createPool({
-        database: 'project_todo_app',
-        port: 3306,
-        host: 'localhost',
-        user: 'root',
-        password: 'Ravindu123',
-        connectionLimit: 10
+        database: process.env.DB_NAME,
+        port: +process.env.DB_PORT!,
+        host: process.env.DB_HOST,
+        user: process.env.DB_USER,
+        password: process.env.DB_PASSWORD,
+        connectionLimit: +process.env.DB_CONNECTION_LIMIT!
 });
 
 async function getAllTasks(req: Request,res: Response){

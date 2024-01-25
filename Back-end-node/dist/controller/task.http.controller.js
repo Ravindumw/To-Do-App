@@ -1,5 +1,6 @@
 import { Router } from "express";
 import mysql from "mysql2/promise";
+import 'dotenv/config';
 const controller = Router();
 controller.get('/', getAllTasks);
 controller.post('/', saveTask);
@@ -7,12 +8,12 @@ controller.patch('/:id', updateTask);
 controller.delete('/:id', deleteTask);
 export { controller as TaskHttpController };
 const pool = mysql.createPool({
-    database: 'project_todo_app',
-    port: 3306,
-    host: 'localhost',
-    user: 'root',
-    password: 'Ravindu123',
-    connectionLimit: 10
+    database: process.env.DB_NAME,
+    port: +process.env.DB_PORT,
+    host: process.env.DB_HOST,
+    user: process.env.DB_USER,
+    password: process.env.DB_PASSWORD,
+    connectionLimit: +process.env.DB_CONNECTION_LIMIT
 });
 async function getAllTasks(req, res) {
     if (!req.query.email)

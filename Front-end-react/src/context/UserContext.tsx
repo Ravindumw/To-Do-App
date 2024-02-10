@@ -1,8 +1,7 @@
-import {createContext, ReactNode, useContext} from "react";
-import firebase from "firebase/compat";
-import UserInfo = firebase.UserInfo;
+import {createContext, ReactNode, useContext, useReducer} from "react";
+import {User} from "firebase/auth";
 
-const UserContext = createContext<UserInfo>(null);
+const UserContext = createContext<User | null>(null);
 const UserDispatcherContext = createContext<React.Dispatch<Action>>(()=>{});
 
 type Action = {
@@ -10,7 +9,7 @@ type Action = {
     [property: string] : any
 }
 
-function userReducer(user:UserInfo, action:Action){
+function userReducer(user:User, action:Action){
     if(action.type === 'sign-in'){
         return action.user;
     }else {
@@ -18,8 +17,8 @@ function userReducer(user:UserInfo, action:Action){
     }
 }
 
-function userProvider({children}:{children: ReactNode}){
-   const [user, userDispatcher] = userReducer(userReducer,null);
+export function UserProvider({children}:{children: ReactNode}){
+   const [user, userDispatcher] = useReducer(userReducer,null);
    return (<UserContext.Provider value={user}>
        <UserDispatcherContext.Provider value={userDispatcher}>
            {children}
@@ -28,5 +27,9 @@ function userProvider({children}:{children: ReactNode}){
 }
 
 export function useUser(){
+    return useContext(UserContext);
+}
+
+export function useUserDispatcher(){
     return useContext(UserDispatcherContext);
 }

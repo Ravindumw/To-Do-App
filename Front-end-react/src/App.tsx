@@ -1,15 +1,28 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
 import './App.css'
+import {useEffect} from "react";
+import {onAuthStateChanged} from 'firebase/auth';
+import {auth} from "./firebase.ts";
+import {useUser, useUserDispatcher} from "./context/UserContext.tsx";
+import {SignIn} from "./signin/SignIn.tsx";
 
 function App() {
-  const [count, setCount] = useState(0)
+    const user = useUser();
+    const userDispatcher = useUserDispatcher();
 
-  return (
-    <>
-      <h1>To Do App</h1>
-    </>
+    useEffect(() => {
+        onAuthStateChanged(auth, (user) => {
+            if (user) {
+                userDispatcher({type: 'sign-in', user})
+            } else {
+                userDispatcher({type: 'sign-out'})
+            }
+        });
+    }, []);
+
+    return (
+        <>
+            {user ? <h1>To-do App</h1> : <SignIn/>}
+        </>
   )
 }
 

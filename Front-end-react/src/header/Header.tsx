@@ -12,7 +12,7 @@ export const Header = () => {
         justify-content-between align-items-center">
             <h3 className="m-0">To-do App</h3>
             <button onClick={handleSignOut}
-                className="btn btn-outline-primary btn-sm">
+                className="btn btn-outline-danger btn-sm">
                 Sign Out
             </button>
         </header>

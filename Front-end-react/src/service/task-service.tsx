@@ -17,12 +17,16 @@ export async function saveTask(task: TaskDto){
 }
 
 export async function updateTask(task: TaskDto){
-    const response = await fetch(API_BASE_URL,{
+    const response = await fetch(`${API_BASE_URL}/${task.id}`,{
         method:"PATCH",
         headers:{
             "Content-Type":"application/json"
         },
-        body: JSON.stringify(task)
+        body: JSON.stringify({
+            description: task.description,
+            status: !task.status,
+            email: task.email
+        })
     });
     if (!response.ok) throw new Error("Failed to update the task")
 

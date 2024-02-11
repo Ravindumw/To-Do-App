@@ -1,19 +1,24 @@
 import {createContext, ReactNode, useContext, useReducer} from "react";
 import {TaskDto} from "../dto/TaskDto.ts";
+import {act} from "react-dom/test-utils";
 
 type Action = {
-    type: "add" | "delete" | "set-list",
+    type: "add" | "delete" | "update" | "set-list",
     [property: string]: any
 }
 
 const TaskContext = createContext<TaskDto[]>([]);
 const TaskDispatchContext = createContext<React.Dispatch<Action>>(()=>{});
 
-function taskReducer(tasks: TaskDto[], action: Action){
+function taskReducer(taskList: TaskDto[], action: Action){
     if(action.type === "add"){
-        return [...tasks, action.task];
+        return [...taskList, action.task];
     }else if (action.type === "delete"){
-        return tasks.filter(task => task.id !== task.id);
+        return taskList.filter(task => task.id !== task.id);
+    }else if(action.type === "update"){
+        const task = taskList.find(t => t.id == action.task.id)!;
+        task.status = !task.status;
+        return taskList;
     }else {
         return action.taskList;
     }

@@ -9,13 +9,13 @@ type Action = {
 const TaskContext = createContext<TaskDto[]>([]);
 const TaskDispatchContext = createContext<React.Dispatch<Action>>(()=>{});
 
-function taskReducer(tasks: TaskDto[], {type, task, taskList}: Action){
-    if(type === "add"){
-        return [...tasks, task];
-    }else if (type === "set-list"){
-        return taskList;
-    }else {
+function taskReducer(tasks: TaskDto[], action: Action){
+    if(action.type === "add"){
+        return [...tasks, action.task];
+    }else if (action.type === "delete"){
         return tasks.filter(task => task.id !== task.id);
+    }else {
+        return action.taskList;
     }
 }
 

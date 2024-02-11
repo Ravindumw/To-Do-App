@@ -9,6 +9,7 @@ import {Header} from "./header/Header.tsx";
 import {Form} from "./form/Form.tsx";
 import {useTaskDispatcher, useTaskList} from "./context/TaskContext.tsx";
 import {getAllTasks} from "./service/task-service.tsx";
+import {Task} from "./task/Task.tsx";
 
 function App() {
     const [loader, setLoader] = useState(true);
@@ -43,7 +44,7 @@ function App() {
                     <Form/>
                     <div>
                         {taskList.map(task =>
-                        <h1>{task.description}</h1>
+                        <Task{...task}/>
                         )}
                     </div>
                 </>)

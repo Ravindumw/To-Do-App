@@ -22,7 +22,7 @@ import {Router} from "@angular/router";
               Please sign in with your Google to continue
             </div>
             <div class="text-center mt-2">
-              <button class="text-slate-200 border border-slate-400
+              <button (click)="onClick()" class="text-slate-200 border border-slate-400
                 rounded-md px-2 py-1 inline-flex items-center
                 active:border-sky-800
                 hover:border-sky-600 hover:shadow-md hover:shadow-cyan-900">
@@ -35,5 +35,14 @@ import {Router} from "@angular/router";
   styleUrl: './login.component.scss'
 })
 export class LoginComponent {
+  constructor(private authService: AuthService,
+              private routerService: Router) {
 
+  }
+
+  onClick(){
+    this.authService.signIn().then(user=>{
+      this.routerService.navigateByUrl('/app');
+    });
+  }
 }

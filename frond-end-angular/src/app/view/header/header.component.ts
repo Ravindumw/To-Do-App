@@ -1,5 +1,6 @@
 import {Component, ElementRef, HostListener, ViewChild} from '@angular/core';
 import {AuthService} from "../../service/auth.service";
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-header',
@@ -18,7 +19,7 @@ import {AuthService} from "../../service/auth.service";
              class="hidden cursor-auto flex-col gap-2 font-normal text-center bg-[#1E1F22] absolute border top-full mt-2 rounded-md right-0 p-2 shadow-lg shadow-gray-700">
           <div class="px-2 font-bold">someone&#64;ijse.lk</div>
           <div class="whitespace-nowrap px-2 " >Hi, Kasun Sampath!</div>
-          <div class="cursor-pointer group flex flex-row rounded justify-center items-center
+          <div (click)="onClick()" class="cursor-pointer group flex flex-row rounded justify-center items-center
                 bg-slate-600 p-2 hover:bg-slate-700">
             <span class="material-symbols-outlined group-hover:text-lime-500 pr-1">
                 logout
@@ -36,7 +37,8 @@ export class HeaderComponent {
   userMenuElm!: ElementRef<HTMLDivElement>
 
 
-  constructor(public authService: AuthService) {
+  constructor(public authService: AuthService,
+              public routerService: Router) {
 
   }
 
@@ -54,6 +56,10 @@ export class HeaderComponent {
     if ($event.target != avatar) return;
     this.userMenuElm.nativeElement.classList.toggle('flex');
     this.userMenuElm.nativeElement.classList.toggle('hidden');
+  }
+
+  onClick(){
+    this.authService.signOut().then(value => this.routerService.navigateByUrl('/login'));
   }
 
 }

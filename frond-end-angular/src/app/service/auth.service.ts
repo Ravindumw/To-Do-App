@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import {Auth, User, authState,GoogleAuthProvider, user, signInWithPopup} from "@angular/fire/auth";
+import {Auth, User, authState, GoogleAuthProvider, user, signInWithPopup, signOut} from "@angular/fire/auth";
 import {BehaviorSubject} from "rxjs";
 
 @Injectable()
@@ -23,5 +23,8 @@ export class AuthService {
 
   getPrinciple(){
     return this.userSubject.asObservable();
+  }
+  signOut(){
+    return signOut(this.auth);
   }
 }

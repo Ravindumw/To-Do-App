@@ -1,0 +1,14 @@
+{
+  "targets": {
+    "to-do-app-angular-522df": {
+      "hosting": {
+        "frond-end-angular": [
+          "to-do-app-angular-522df"
+        ]
+      }
+    }
+  },
+  "projects": {
+    "default": "to-do-app-angular-522df"
+  }
+}

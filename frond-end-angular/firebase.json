@@ -1,0 +1,9 @@
+{
+  "hosting": [
+    {
+      "target": "frond-end-angular",
+      "source": ".",
+      "frameworksBackend": {}
+    }
+  ]
+}

@@ -5,11 +5,11 @@ import {AuthService} from "./service/auth.service";
   selector: 'app-root',
   styleUrl: './app.component.scss',
   template:`
-    <router-outlet>
-      @if (!authService.isInitialized()) {
-        <app-loader />
+    @if (!authService.isInitialized()) {
+      <app-loader />
+      } @else{
+      <router-outlet/>
       }
-    </router-outlet>
   `
 })
 export class AppComponent {

@@ -1,11 +1,13 @@
 import { Component } from '@angular/core';
+import {TaskService} from "../../service/task.service";
 
 @Component({
   selector: 'app-from',
   template: `
-    <form action="" class="flex p-2 gap-1 border-b border-gray-700">
-      <input type="text" placeholder="Eg. Finish To-do App Design"
+    <form (ngSubmit)="onSubmit(txt)" class="flex p-2 gap-1 border-b border-gray-700">
+      <input #txt type="text" placeholder="Eg. Finish To-do App Design"
       class="border flex-grow p-1 px-2 outline-0
+      selection:bg-slate-700
         bg-transparent border-gray-600 caret-sky-500 text-white
         rounded focus:ring-1 hover:border-sky-300 focus:ring-sky-400"/>
       <button class="border px-2 border-gray-700 font-bold
@@ -19,4 +21,22 @@ import { Component } from '@angular/core';
 })
 export class FromComponent {
 
+
+  constructor(private taskService: TaskService) {
+  }
+
+  async onSubmit(txtElm: HTMLInputElement){
+    if (!txtElm.value.trim()){
+      txtElm.focus();
+      txtElm.select();
+    }else {
+      try {
+      await this.taskService.createTask(txtElm.value.trim());
+      txtElm.value = '';
+      txtElm.focus();
+      }catch (err) {
+
+      }
+    }
+  }
 }

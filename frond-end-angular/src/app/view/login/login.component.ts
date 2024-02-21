@@ -2,6 +2,8 @@ import { Component } from '@angular/core';
 import {AuthService} from "../../service/auth.service";
 import {user} from "@angular/fire/auth";
 import {Router} from "@angular/router";
+import {authGuard} from "../../guard/auth.guard";
+import {Title} from "@angular/platform-browser";
 
 @Component({
   selector: 'app-login',
@@ -22,7 +24,7 @@ import {Router} from "@angular/router";
               Please sign in with your Google to continue
             </div>
             <div class="text-center mt-2">
-              <button (click)="onClick()" class="text-slate-200 border border-slate-400
+              <button (click)="authService.signIn()" class="text-slate-200 border border-slate-400
                 rounded-md px-2 py-1 inline-flex items-center
                 active:border-sky-800
                 hover:border-sky-600 hover:shadow-md hover:shadow-cyan-900">
@@ -35,14 +37,8 @@ import {Router} from "@angular/router";
   styleUrl: './login.component.scss'
 })
 export class LoginComponent {
-  constructor(private authService: AuthService,
-              private routerService: Router) {
-
+  constructor(public authService: AuthService, private title: Title) {
+    title.setTitle("Login: To-do App");
   }
 
-  onClick(){
-    this.authService.signIn().then(user=>{
-      this.routerService.navigateByUrl('/app');
-    });
-  }
 }

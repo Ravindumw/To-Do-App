@@ -7,14 +7,9 @@ import {log} from "@angular-devkit/build-angular/src/builders/ssr-dev-server";
 export const authGuard: CanActivateFn = (route, state) => {
   const routerService = inject(Router);
   const authService = inject(AuthService);
-  return new Promise<boolean|UrlTree>(resolve => {
-    authService.getPrinciple().subscribe(user =>{
-      if (user){
-          resolve(true);
-        }else {
-          resolve(routerService.createUrlTree(['/login']));
-        }
-    });
-  });
-
+  if (authService.getPrinciple()){
+    return true;
+  }else {
+    return routerService.createUrlTree(['/login']);
+  }
 };

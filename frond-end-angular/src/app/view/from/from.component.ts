@@ -1,5 +1,6 @@
-import { Component } from '@angular/core';
-import {TaskService} from "../../service/task.service";
+import {Component, Inject} from '@angular/core';
+import {SpringTaskService} from "../../service/spring-task.service";
+import {TaskService} from "../../service/task-service";
 
 @Component({
   selector: 'app-from',
@@ -21,8 +22,7 @@ import {TaskService} from "../../service/task.service";
 })
 export class FromComponent {
 
-
-  constructor(private taskService: TaskService) {
+  constructor(@Inject(TaskService) private taskService: TaskService) {
   }
 
   async onSubmit(txtElm: HTMLInputElement){

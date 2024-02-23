@@ -1,4 +1,4 @@
-import {importProvidersFrom, NgModule, Optional} from '@angular/core';
+import {importProvidersFrom, InjectionToken, NgModule, Optional} from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 
 import { AppComponent } from './app.component';
@@ -15,7 +15,7 @@ import {AuthService} from "./service/auth.service";
 import {AuthGuard} from "@angular/fire/auth-guard";
 import {authGuard} from "./guard/auth.guard";
 import { LoaderComponent } from './view/loader/loader.component';
-import {TaskService} from "./service/task.service";
+import {SpringTaskService} from "./service/spring-task.service";
 import {
   HTTP_INTERCEPTORS,
   HttpClient,
@@ -27,8 +27,11 @@ import {FormsModule} from "@angular/forms";
 import {ToastrModule} from "ngx-toastr";
 import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
 import {errorInterceptor} from "./interceptor/error.interceptor";
+import {CloudStoreTaskService} from "./service/cloud-store-task.service";
+import {TaskService} from "./service/task-service";
+import {getFirestore, provideFirestore} from "@angular/fire/firestore";
 
-const routes: Routes = [
+const APP_ROUTES: Routes = [
   {
     path:'',
     pathMatch:'full',
@@ -57,7 +60,7 @@ const routes: Routes = [
   ],
   imports: [
     BrowserModule,
-    RouterModule.forRoot(routes),
+    RouterModule.forRoot(APP_ROUTES),
     provideFirebaseApp(() => initializeApp({
       "projectId": "to-do-app-angular-522df",
       "appId": "1:1028753500772:web:52ddafaf7ecb9abde08d71",
@@ -67,6 +70,7 @@ const routes: Routes = [
       "messagingSenderId": "1028753500772"
     })),
     provideAuth(() => getAuth()),
+    provideFirestore(()=> getFirestore()),
     FormsModule,
     BrowserAnimationsModule,
     ToastrModule.forRoot({
@@ -77,7 +81,9 @@ const routes: Routes = [
       timeOut: 1500
     })
   ],
-  providers: [AuthService, TaskService, provideHttpClient(withInterceptors([errorInterceptor]))],
+  providers: [AuthService,
+    {provide: TaskService, useClass: CloudStoreTaskService},
+    provideHttpClient(withInterceptors([errorInterceptor]))],
   bootstrap: [AppComponent]
 })
 export class AppModule {

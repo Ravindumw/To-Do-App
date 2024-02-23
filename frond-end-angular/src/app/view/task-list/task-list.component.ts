@@ -1,7 +1,8 @@
-import { Component } from '@angular/core';
-import {TaskService} from "../../service/task.service";
+import {Component, Inject} from '@angular/core';
+import {SpringTaskService} from "../../service/spring-task.service";
 import {TaskDTO} from "../../dto/taskDTO";
 import {animate, query, style, transition, trigger} from "@angular/animations";
+import {TaskService} from "../../service/task-service";
 
 @Component({
   selector: 'app-task-list',
@@ -14,7 +15,7 @@ import {animate, query, style, transition, trigger} from "@angular/animations";
           <div class="text-center text-slate-400 mt-2 animate__animated animate__fadeIn animate__delay-1s">No Tasks Yet!</div>
           }
       }@else {
-        <div class="flex justify-center items-center w-full fixed top-0 z-50">
+        <div class="flex justify-center items-center w-full fixed top-0 -z-50">
                <app-loader />
         </div>
       }
@@ -25,12 +26,12 @@ import {animate, query, style, transition, trigger} from "@angular/animations";
     trigger('task',[
       transition(":leave",[
         query('div>div: last-child', style({display: 'none'})),
-        animate(3500 , style({transform: 'translateX(-100%)'}))])
+        animate(350 , style({transform: 'translateX(-100%)'}))])
     ])
   ]
 })
 export class TaskListComponent {
-  task: any;
-  constructor(public taskService: TaskService) {  }
-
+  task : any;
+  constructor(@Inject(TaskService) public taskService: TaskService) {
+  }
 }

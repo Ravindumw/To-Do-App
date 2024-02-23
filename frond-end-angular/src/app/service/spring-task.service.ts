@@ -3,9 +3,10 @@ import {HttpClient} from "@angular/common/http";
 import {AuthService} from "./auth.service";
 import {TaskDTO} from "../dto/taskDTO";
 import {catchError, finalize, tap} from "rxjs";
+import {TaskService} from "./task-service";
 
 @Injectable()
-export class TaskService {
+export class SpringTaskService implements TaskService{
   private readonly API_BASE_URL = 'http://localhost:8080/api/v1/tasks';
   private taskList: Array<TaskDTO> = [];
   private initialized = false;

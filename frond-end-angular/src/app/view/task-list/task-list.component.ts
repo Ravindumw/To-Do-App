@@ -1,6 +1,4 @@
 import {Component, Inject} from '@angular/core';
-import {SpringTaskService} from "../../service/spring-task.service";
-import {TaskDTO} from "../../dto/taskDTO";
 import {animate, query, style, transition, trigger} from "@angular/animations";
 import {TaskService} from "../../service/task-service";
 
@@ -31,6 +29,7 @@ import {TaskService} from "../../service/task-service";
   ]
 })
 export class TaskListComponent {
+
   constructor(@Inject(TaskService) public taskService: TaskService) {
   }
 }

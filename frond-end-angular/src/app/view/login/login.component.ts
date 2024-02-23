@@ -1,8 +1,5 @@
 import { Component } from '@angular/core';
 import {AuthService} from "../../service/auth.service";
-import {user} from "@angular/fire/auth";
-import {Router} from "@angular/router";
-import {authGuard} from "../../guard/auth.guard";
 import {Title} from "@angular/platform-browser";
 
 @Component({

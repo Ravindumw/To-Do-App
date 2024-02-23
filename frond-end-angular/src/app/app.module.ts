@@ -30,6 +30,7 @@ import {errorInterceptor} from "./interceptor/error.interceptor";
 import {CloudStoreTaskService} from "./service/cloud-store-task.service";
 import {TaskService} from "./service/task-service";
 import {getFirestore, provideFirestore} from "@angular/fire/firestore";
+import {RoutingModule} from "./routing.module";
 
 
 @NgModule({
@@ -45,7 +46,7 @@ import {getFirestore, provideFirestore} from "@angular/fire/firestore";
   ],
   imports: [
     BrowserModule,
-    RouterModule,
+    RoutingModule,
     provideFirebaseApp(() => initializeApp({
       "projectId": "to-do-app-angular-522df",
       "appId": "1:1028753500772:web:52ddafaf7ecb9abde08d71",

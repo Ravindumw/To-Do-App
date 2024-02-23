@@ -1,7 +1,5 @@
 import {Component, Inject, Input} from '@angular/core';
 import {TaskDTO} from "../../dto/taskDTO";
-import {single} from "rxjs";
-import {SpringTaskService} from "../../service/spring-task.service";
 import {TaskService} from "../../service/task-service";
 
 @Component({

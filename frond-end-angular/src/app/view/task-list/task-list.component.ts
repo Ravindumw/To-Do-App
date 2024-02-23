@@ -31,7 +31,6 @@ import {TaskService} from "../../service/task-service";
   ]
 })
 export class TaskListComponent {
-  task : any;
   constructor(@Inject(TaskService) public taskService: TaskService) {
   }
 }

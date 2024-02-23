@@ -31,22 +31,7 @@ import {CloudStoreTaskService} from "./service/cloud-store-task.service";
 import {TaskService} from "./service/task-service";
 import {getFirestore, provideFirestore} from "@angular/fire/firestore";
 
-const APP_ROUTES: Routes = [
-  {
-    path:'',
-    pathMatch:'full',
-    redirectTo:'/app'
-  },
-  {
-    path: 'login',
-    component: LoginComponent
-  },
-  {
-    path: 'app',
-    component:MainComponent,
-    canActivate: [authGuard]
-  }
-]
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -60,7 +45,7 @@ const APP_ROUTES: Routes = [
   ],
   imports: [
     BrowserModule,
-    RouterModule.forRoot(APP_ROUTES),
+    RouterModule,
     provideFirebaseApp(() => initializeApp({
       "projectId": "to-do-app-angular-522df",
       "appId": "1:1028753500772:web:52ddafaf7ecb9abde08d71",
